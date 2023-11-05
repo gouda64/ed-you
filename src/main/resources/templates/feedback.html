@@ -12,6 +12,7 @@
                 Please enter your feedback here.
               </h1>
               <div class="field">
+                <label class="is-size-5" for="staff">Teacher: </label>
                 <p class="control select">
                     <select name="staff" id="staff">
                         <option th:each="staff: ${staffList}" th:value="${staff.id}" th:text="${staff.name}"></option>
@@ -23,7 +24,8 @@
                   <div class="field">
                     <div class="control">
                       <textarea class="textarea" th:field="*{comment}" placeholder="What comments do you have on this teacher?"></textarea>
-                      <div class="" th:if="${#fields.hasErrors('comment')}" th:errors="*{comment}"></div>
+                      <div class="has-text-danger" th:if="${#fields.hasErrors('comment')}" th:errors="*{comment}"></div>
+                      <div class="has-text-success" th:if="${successful}">Successfully submitted. Thank you for your feedback!</div>
                     </div>
                   </div>
                 </div>

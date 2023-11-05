@@ -20,13 +20,19 @@
             </p>
             </div>
 
-            <div class="block">
-                <input class="input is-link" type="text" name="code" id="code" style="width: 33%" placeholder="Enter school code....">
+            <div class="block is-flex is-justify-content-center" style="gap: 2rem;">
+                <input class="input is-link" type="text" name="code" id="code" style="width: 33%" placeholder="School code....">
+                <div class="block">
+                    <button class="button is-link">></button>
+                </div>
             </div>
 
-            <div class="block">
-                <button class="button is-link is-outlined">Enter</button>
+            <div class="block" th:if="${hasError}">
+                <div class="content is-small">
+                    <h4 class="has-text-danger">Invalid school code. Please try again!</h4>
+                </div>
             </div>
+
         </form>
         </div>
     </div>

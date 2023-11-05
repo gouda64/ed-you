@@ -3,17 +3,60 @@
 <head th:replace="~{/fragments/general.html :: head}">
 </head>
 <body>
-<div th:text="${staff.name}"></div>
-<div th:text="${rating}"></div>
-<div th:text="${summary}"></div>
 
-<ul>
-  <li th:each="feedback: ${feedbackList}">
-    <span th:text="${feedback.comment}"></span>
-    <span th:text="${feedback.date}"></span>
-    <span th:text="${feedback.rating}"></span>
-  </li>
-</ul>
+<div class="is-flex is-flex-direction-column mb-5" style="gap: 2rem;">
+
+    <div class="is-flex is-justify-content-space-between p-5">
+        <a href="/">
+            <button class="button is-link" type="button">< Back</button>
+        </a>
+        <a href="/logout">
+            <button class="button is-link is-outlined" type="button">Log Out</button>
+        </a>
+    </div>
+
+    <div class="container is-flex is-justify-content-center is-flex-direction-column" style="width: 100%; padding-left: 1.5rem; padding-right: 1.5rem;">
+      <div class="content mb-0 is-large is-flex is-justify-content-space-between is-align-items-center">
+        <div class="block">
+          <h1 class="title">
+              <span th:text="${staff.name}"></span>
+          </h1>
+          <p class="subtitle">
+            at <span th:text="${staff.school.name}"></span>
+          </p>
+        </div>
+
+        <h4>
+          <div class="subtitle mb-0">
+            Overall <br>
+            Rating: <br>
+          </div>
+          <span class="" th:text="${rating.isNaN() ? '?' : rating}"></span>/5
+        </h4>
+      </div>
+
+      <div class="content has-background-link-light has-text-link p-5" style="border-radius: 1.5rem;">
+        <h3 class="title has-text-link">
+          Summary
+       </h3>
+        <div class="" th:text="${summary}"></div>
+      </div>
+
+      <table class="table is-hoverable is-fullwidth">
+        <thead>
+          <tr>
+            <th>Timestamp</th>
+            <th>Comment</th>
+            <th>Rating</th>
+          </tr>
+        </thead>
+        <tr th:each="feedback: ${feedbackList}">
+          <td th:text="${feedback.date}"></td>
+          <td th:text="${feedback.comment}"></td>
+          <td th:text="${feedback.rating}"></td>
+        </tr>
+      </table>
+</div>
 
 </body>
 </html>

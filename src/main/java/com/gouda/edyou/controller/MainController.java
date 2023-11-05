@@ -51,7 +51,10 @@ public class MainController {
     }
 
     @GetMapping("/student-portal")
-    public String studentPortal() {
+    public String studentPortal(@RequestParam(name = "error") Optional<String> error, Model model) {
+        if (error.isPresent()) {
+            model.addAttribute("hasError", true);
+        }
         return "student-portal";
     }
 
@@ -72,9 +75,11 @@ public class MainController {
 //    }
 
     @GetMapping("/student-feedback")
-    public String studentPortal(@RequestParam(name = "code", required = false) String code, Model model) {
+    public String studentPortal(@RequestParam(name = "code", required = false) String code,
+                                @RequestParam(name = "success", required = false) Optional<String> successful,
+                                Model model) {
         School school = schoolService.findByCode(code);
-        if (school == null) return "redirect:/student-portal";
+        if (school == null) return "redirect:/student-portal?error";
         List<Staff> staff = new ArrayList<>(school.getStaff().stream().toList());
         Collections.sort(staff, new Comparator<Staff>() {
             @Override
@@ -85,6 +90,7 @@ public class MainController {
         model.addAttribute("school", school);
         model.addAttribute("staffList", staff);
         model.addAttribute("feedbackForm", new Feedback());
+        model.addAttribute("successful", successful.isPresent());
         return "feedback";
     }
     @PostMapping("/student-feedback")
@@ -112,7 +118,7 @@ public class MainController {
         feedbackForm.setStaff(staff);
 
         feedbackService.save(feedbackForm);
-        return "redirect:/student-feedback?code=" + code;
+        return "redirect:/student-feedback?code=" + code + "&success";
     }
 
     @GetMapping("/{staffId}")
@@ -127,7 +133,7 @@ public class MainController {
         Collections.sort(feedback, new Comparator<Feedback>() {
             @Override
             public int compare(Feedback o1, Feedback o2) {
-                return o1.getDate().compareTo(o2.getDate());
+                return -1*o1.getDate().compareTo(o2.getDate());
             }
         });
         model.addAttribute("staff", staff);
@@ -142,7 +148,7 @@ public class MainController {
             }
         }
         rating /= numRatings;
-        model.addAttribute("rating", rating);
+        model.addAttribute("rating",  new Double(Math.floor(rating * 100) / 100));
         model.addAttribute("summary", staffService.getSummary(staff));
 
         return "staff";
@@ -169,6 +175,23 @@ public class MainController {
         model.addAttribute("staffList", staff);
         model.addAttribute("admin", user);
         model.addAttribute("schoolCode", school.getCode().toString());
+
+        double[] ratings = new double[staff.size()];
+        for (int i = 0; i < staff.size(); i++) {
+            Staff s = staff.get(i);
+            double rating = 0;
+            int numRatings = 0;
+            for (Feedback fb : s.getFeedback()) {
+                if (fb.getRating() != -1) {
+                    rating += fb.getRating();
+                    numRatings++;
+                }
+            }
+            rating /= numRatings;
+            ratings[i] = Math.floor(rating * 100) / 100;
+        }
+        model.addAttribute("ratings", ratings);
+
         return "admin";
     }
 }

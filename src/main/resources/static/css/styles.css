@@ -3,8 +3,13 @@ html, body {
     font-family: "Ubuntu", "Consolas", "Courier New", monospace;
 }
 
+html {
+    overflow-y: auto;
+    overflow-x: auto;
+}
+
 body {
-    overflow-x: hidden;
+    overflow: hidden;
 }
 
 svg {
@@ -12,4 +17,20 @@ svg {
     height: 1rem;
     display: block;
     fill: currentColor;
+}
+
+button {
+    font-family: inherit;
+}
+
+input, textarea {
+    font-family: inherit;
+}
+
+button.is-outlined {
+    transition: all 0.3s;
+}
+
+button.is-outlined {
+    background-color: hsl(217, 71%, 53%);
 }

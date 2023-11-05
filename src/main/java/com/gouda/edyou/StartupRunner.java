@@ -38,37 +38,45 @@ public class StartupRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+        String[] commentPool = new String[]{
+          "This teacher is great!",
+          "Their lectures are a bit boring.",
+          "There's too much homework in their class.",
+          "This teacher is too harsh on students and affect mental health.",
+          "They clearly care about their students."
+        };
+
         School school = new School();
-        school.setName("WPI");
+        school.setName("Worcester Polytechnic Institute");
         schoolService.save(school);
 
         User u1 = new User();
-        u1.setName("Anne Ludes");
+        u1.setName("John Doe");
         u1.setEmail(email1);
         u1.setSchool(school);
         userService.save(u1);
 
         User u2 = new User();
-        u2.setName("Kevin Crowthers");
+        u2.setName("Sara Williams");
         u2.setEmail(email2);
         u2.setSchool(school);
         userService.save(u2);
 
         User u3 = new User();
-        u3.setName("Angela Taricco");
+        u3.setName("Emma Smith");
         u3.setEmail(email3);
         u3.setSchool(school);
         userService.save(u3);
 
         for (int i = 0; i < 10; i++) {
             Staff staff = new Staff();
-            staff.setName("staff " + i);
+            staff.setName("Name " + i);
             staff.setSchool(school);
             staffService.save(staff);
 
             for (int j = 0; j < 10; j++) {
                 Feedback feedback = new Feedback();
-                feedback.setComment("comment comment commentary I think this and that " + i + " " + j);
+                feedback.setComment(commentPool[(int)(Math.random() * commentPool.length)]);
                 feedback.setStaff(staff);
                 feedbackService.save(feedback, (int)(Math.random()*5) + 1);
             }
