@@ -47,6 +47,18 @@ public class StartupRunner implements CommandLineRunner {
         };
 
         School school = new School();
+        school.setName("Rensselaer Polytechnic Institute");
+        schoolService.save(school);
+
+        school = new School();
+        school.setName("Boston University");
+        schoolService.save(school);
+
+        school = new School();
+        school.setName("Quinsigamond Community College");
+        schoolService.save(school);
+
+        school = new School();
         school.setName("Worcester Polytechnic Institute");
         schoolService.save(school);
 
@@ -86,5 +98,12 @@ public class StartupRunner implements CommandLineRunner {
         joe.setName("Demo Joe");
         joe.setSchool(school);
         staffService.save(joe);
+
+        for (int j = 0; j < 5; j++) {
+            Feedback feedback = new Feedback();
+            feedback.setComment(commentPool[(int)(Math.random() * commentPool.length)]);
+            feedback.setStaff(joe);
+            feedbackService.save(feedback, (int)(Math.random()*5) + 1);
+        }
     }
 }

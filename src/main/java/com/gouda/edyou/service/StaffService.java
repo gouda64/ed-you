@@ -45,6 +45,9 @@ public class StaffService {
             for (Feedback fb : staff.getFeedback()) {
                 sb.append(fb.getComment() + ". ");
             }
+            if (sb.length() == 0) {
+                return "Can't generate summary without any feedback.";
+            }
 
             String requestJson = "{" +
                     "\"text\":\"" + sb.toString() + "\"" +
@@ -56,6 +59,7 @@ public class StaffService {
 
         }
         catch (Exception e) {
+//            return e.toString();
             return "Sorry, something went wrong with summary generation! More feedback may be needed before a summary can be compiled.";
         }
     }
