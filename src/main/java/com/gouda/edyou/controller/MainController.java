@@ -137,7 +137,7 @@ public class MainController {
         return "staff";
     }
 
-    @GetMapping(value = {"/signup"})
+    @GetMapping(value = {"/signup", "/login"})
     public String redirect() {
         return "redirect:/";
     }
@@ -159,11 +159,5 @@ public class MainController {
         model.addAttribute("admin", user);
         model.addAttribute("schoolCode", school.getCode().toString());
         return "admin";
-    }
-
-    @GetMapping("/login")
-    public String login(Principal principal, Model model, @RequestParam(name = "logout", required = false) Optional<String> logout) {
-        if (principal != null || logout.isPresent()) return "redirect:/";
-        return "login";
     }
 }
