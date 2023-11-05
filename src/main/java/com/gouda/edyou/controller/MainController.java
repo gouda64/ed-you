@@ -132,13 +132,19 @@ public class MainController {
         });
         model.addAttribute("staff", staff);
         model.addAttribute("feedbackList", feedback);
+
         double rating = 0;
+        int numRatings = 0;
         for (Feedback fb : feedback) {
             if (fb.getRating() != -1) {
-
+                rating += fb.getRating();
+                numRatings++;
             }
         }
+        rating /= numRatings;
         model.addAttribute("rating", rating);
+        model.addAttribute("summary", staffService.getSummary(staff));
+
         return "staff";
     }
 

@@ -4,11 +4,14 @@
 </head>
 <body>
 <div th:text="${staff.name}"></div>
+<div th:text="${rating}"></div>
+<div th:text="${summary}"></div>
 
 <ul>
   <li th:each="feedback: ${feedbackList}">
     <span th:text="${feedback.comment}"></span>
     <span th:text="${feedback.date}"></span>
+    <span th:text="${feedback.rating}"></span>
   </li>
 </ul>
 

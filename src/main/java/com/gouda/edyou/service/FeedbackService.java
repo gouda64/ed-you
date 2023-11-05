@@ -59,4 +59,10 @@ public class FeedbackService {
 
         FeedbackRepository.save(feedback);
     }
+    public void save(Feedback feedback, int rating) {
+        feedback.setDate(new Date());
+        feedback.setRating(rating);
+
+        FeedbackRepository.save(feedback);
+    }
 }
