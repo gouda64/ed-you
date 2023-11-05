@@ -3,11 +3,28 @@
 <head th:replace="~{/fragments/general.html :: head}">
 </head>
 <body>
-<form action="/student-feedback" method="get" autocomplete="off">
-    <label for="code">Provided School Code</label>
-    <input type="text" name="code" id="code" placeholder="ABC123">
-    <button type="submit">Submit</button>
-</form>
+<section class="section" style="align-items: center;">
+    <div class="container has-text-centered">
+        <form action="/student-feedback" method="get" autocomplete="off">
+            <div class="field">
+                <label class="label">Enter your school code.</label>
+                <div class="control">
+                    <input class="input" type="text" name="code" id="code" placeholder="ABC123">
+                </div>
+            </div>
+
+            <div class="control">
+                <button class="button is-link">Submit</button>
+            </div>
+        </form>
+    </div>
+</section>
+
+<!--<form action="/student-feedback" method="get" autocomplete="off">-->
+<!--    <label for="code">Provided School Code</label>-->
+<!--    <input type="text" name="code" id="code" placeholder="ABC123">-->
+<!--    <button type="submit">Submit</button>-->
+<!--</form>-->
 
 </body>
 </html>

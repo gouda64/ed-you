@@ -26,11 +26,13 @@ import java.util.*;
 
 @Controller
 public class MainController {
-    private static final String COHERE_URL = "https://api.cohere.ai/v1/classify";
-
-    @Value("${cohere.apiKey}")
-    private String apiKey;
-    private final RestTemplate restTemplate = new RestTemplate();
+//    private static final String COHERE_URL = "https://api.cohere.ai/v1/classify";
+//
+//    @Value("${cohere.apiKey}")
+//    private String apiKey;
+//    @Value("${cohere.toxicityModel}")
+//    private String toxicityModelID;
+//    private final RestTemplate restTemplate = new RestTemplate();
 
     private final UserService userService;
     private final StaffService staffService;
@@ -53,11 +55,21 @@ public class MainController {
         return "student-portal";
     }
 
-    @GetMapping("/test")
-    public String test(@RequestParam(name = "comment") String comment, Model model) {
-
-        return "home";
-    }
+//    @GetMapping("/test")
+//    public String test(@RequestParam(name = "comment") String comment, Model model) {
+//        HttpHeaders headers = new HttpHeaders();
+//        headers.setContentType(MediaType.APPLICATION_JSON);
+//        headers.set("Authorization", "Bearer " + apiKey);
+//
+//        String requestJson = "{" +
+//                "\"inputs\": [ \"" + comment + "\" ], " +
+//                "\"model\": \"" + toxicityModelID + "\"" +
+//                "}";
+//        HttpEntity<String> request = new HttpEntity<>(requestJson, headers);
+//        ResponseEntity<String> response = restTemplate.postForEntity(COHERE_URL, request, String.class);
+//        model.addAttribute("test", response.getBody());
+//        return "home";
+//    }
 
     @GetMapping("/student-feedback")
     public String studentPortal(@RequestParam(name = "code", required = false) String code, Model model) {

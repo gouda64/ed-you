@@ -3,9 +3,28 @@
 <head th:replace="~{/fragments/general.html :: head}">
 </head>
 <body>
-    <a href="/login">Admin Login</a>
-    <a href="/student-portal">Student Portal</a>
+<section class="section" style="align-items: center;">
+    <div class="container has-text-centered">
+        <div class="content is-large" style="">
+            <h1 class="title">
+                Welcome to ED-YOU.
+            </h1>
+            <p class="subtitle">
+                Revolutionizing student-teacher feedback.
+            </p>
+            <a href= "/student-portal">
+                <button class="button is-link is-outlined">
+                    Student
+                </button>
+            </a>
 
-<div th:text="${test}"></div>
+            <a href= "/login">
+                <button class="button is-link is-outlined">
+                    Admin
+                </button>
+            </a>
+        </div>
+    </div>
+</section>
 </body>
 </html>
