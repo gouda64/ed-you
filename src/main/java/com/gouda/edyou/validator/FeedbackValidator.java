@@ -50,7 +50,7 @@ public class FeedbackValidator implements Validator {
         int index = response.getBody().indexOf("\"Toxic\":{\"confidence\":") + "\"Toxic\":{\"confidence\":".length() + 1;
         double confidence = Double.parseDouble(response.getBody().substring(index, index + response.getBody().substring(index).indexOf("}")));
         if (confidence > 0.99) {
-            errors.rejectValue("comment", "error", "This comment was detected as toxic. Please reword and resubmit! " + confidence);
+            errors.rejectValue("comment", "error", "This comment was detected as toxic. Please reword and resubmit!");
         }
     }
 }
