@@ -5,19 +5,35 @@
 <head th:replace="~{/fragments/general.html :: head}">
 </head>
 <body>
-    <div th:text="${admin.name}"></div>
-    <div th:text="${schoolCode}"></div>
-
     <section class="section">
+
+        <div class="container has-text-right">
+        <a href="/logout">
+            <button class="button is-link is-outlined" type="button">
+                Log Out
+            </button>
+        </a>
+            <br>
+            <br>
+            <br>
+            <br>
+
+
         <div class="container has-text-centered">
           <div class="content is-large">
             <div class="block">
               <h1 class="title">
-                Choose a teacher below.
+                  Hello, {Teacher name}, your school's code is {school code}.
               </h1>
             </div>
+
+              <div class="block">
+                  <p class="subtitle">
+                      Please choose a teacher below.
+                  </p>
+              </div>
+
           </div>
-      
           <a href="teacherPage.html">
           <div class="list">
             <div class="list-item box" th:each="staff: ${staffList}">
@@ -37,13 +53,7 @@
             </div>
           </div>
 
-          <a href="/logout">
-            <button type="button">
-                Log Out
-            </button>
-        </a>
-      
-        </section>
+    </section>
       
 
 </body>
