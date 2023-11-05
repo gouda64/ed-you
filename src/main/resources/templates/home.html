@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{/fragments/general.html :: head(main=true)}">
+</head>
+<body>
+    <div th:if="${name != null}" th:text="${name}"></div>
+    <a th:replace="~{/fragments/general.html :: oauth-google}"></a>
+</body>
+</html>
