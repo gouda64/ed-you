@@ -20,8 +20,7 @@ public class Feedback {
 
     @Column(name = "timestamp")
     @NotNull
-    @NotBlank
-    private Date date = new Date();
+    private Date date;
 
     @ManyToOne
     @JoinColumn(name = "staff", referencedColumnName = "id")

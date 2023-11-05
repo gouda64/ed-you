@@ -51,4 +51,12 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public School getSchool() {
+        return school;
+    }
+
+    public void setSchool(School school) {
+        this.school = school;
+    }
 }

@@ -53,7 +53,7 @@ public class WebSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.headers().frameOptions().disable();
         http
-                .csrf().disable() //TODO: change later
+                .csrf().disable()
                 .authorizeHttpRequests((requests) -> requests
                                 .requestMatchers(antMatcher("/**")).permitAll()
                         //.anyRequest().authenticated()
