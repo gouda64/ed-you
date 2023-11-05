@@ -1,7 +1,6 @@
 package com.gouda.edyou.config;
 
 import com.gouda.edyou.entity.OAuth2UserImpl;
-import com.gouda.edyou.entity.User;
 import com.gouda.edyou.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -40,7 +39,7 @@ public class WebSecurityConfig {
     }
 
     private String[] resources() {
-        return new String[]{"/webjars/**", "/js/**","/error/**"
+        return new String[]{"/webjars/**", "/static/js/**","/error/**"
                 , "/css/**","/fonts/**","/libs/**","/img/**","/h2-console/**"};
     }
 

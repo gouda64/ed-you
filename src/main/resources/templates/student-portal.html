@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{/fragments/general.html :: head}">
+</head>
+<body>
+<form action="/student-feedback" method="get" autocomplete="off">
+    <label for="code">Provided School Code</label>
+    <input type="text" name="code" id="code" placeholder="ABC123">
+    <button type="submit">Submit</button>
+</form>
+
+</body>
+</html>

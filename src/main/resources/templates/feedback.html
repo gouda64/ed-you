@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{/fragments/general.html :: head}">
+</head>
+<body>
+    <div th:text="${school.name}"></div>
+    <form action="/student-feedback" method="post" autocomplete="off">
+        <div>
+            <label for="staff">Teacher</label>
+
+            <select name="staff" id="staff">
+                <option th:each="staff: ${staffList}" th:value="${staff.id}" th:text="${staff.name}"></option>
+            </select>
+        </div>
+        <div>
+            <label for="comment">Feedback</label>
+            <textarea type="text" name="comment" id="comment"></textarea>
+        </div>
+        <div style="display: none;">
+            <input type="text" name="code" id="code" th:value="${school.code}">
+        </div>
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>

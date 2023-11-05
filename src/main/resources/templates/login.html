@@ -3,7 +3,6 @@
 <head th:replace="~{/fragments/general.html :: head}">
 </head>
 <body>
-    <a href="/login">Admin Login</a>
-    <a href="/student-portal">Student Portal</a>
+    <a th:replace="~{/fragments/general.html :: oauth-google}"></a>
 </body>
 </html>

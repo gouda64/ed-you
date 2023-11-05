@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.UUID;
+
 @Service
 @Transactional
 public class SchoolService {
@@ -16,8 +18,8 @@ public class SchoolService {
         this.schoolRepository = schoolRepository;
     }
 
-    public School findById(long id) {
-        return schoolRepository.findById(id);
+    public School findByCode(String code) {
+        return schoolRepository.findByCode(code);
     }
 
     public void save(School school) {

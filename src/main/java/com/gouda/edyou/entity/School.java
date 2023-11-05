@@ -4,15 +4,19 @@ import com.gouda.edyou.entity.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import org.springframework.util.StringUtils;
 
+import java.nio.ByteBuffer;
+import java.security.SecureRandom;
+import java.util.Base64;
 import java.util.Set;
+import java.util.UUID;
 
 @Entity
 public class School {
     @Column(name = "id", unique = true)
     @Id
-    @GeneratedValue
-    private long id;
+    private String code = generateCode();
 
     @Column(name = "name")
     @NotNull
@@ -27,12 +31,19 @@ public class School {
     @OneToMany(mappedBy = "school", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Staff> staff;
 
-    public long getId() {
-        return id;
+    private static String generateCode() {
+        SecureRandom random = new SecureRandom();
+        byte[] randomBytes = new byte[6];
+        random.nextBytes(randomBytes);
+        String code = Base64.getEncoder().encodeToString(randomBytes);
+        return code.substring(0, code.length()-2); //to get rid of padding
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public String getCode() {
+        return code.toString();
+    }
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getName() {

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{/fragments/general.html :: head}">
+</head>
+<body>
+    <div th:text="${admin.name}"></div>
+    <div th:text="${schoolCode}"></div>
+
+    <ul>
+        <li th:each="staff: ${staffList}">
+            <a th:href="${'/' + staff.id}"><span th:text="${staff.name}"></span></a>
+        </li>
+    </ul>
+
+    <a href="/logout">
+        <button type="button">
+            Log Out
+        </button>
+    </a>
+
+</body>
+</html>
