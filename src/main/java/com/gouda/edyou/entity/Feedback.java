@@ -27,6 +27,10 @@ public class Feedback {
     @NotNull
     private Staff staff;
 
+    @Column(name = "rating")
+    @NotNull
+    private int rating;
+
     public long getId() {
         return id;
     }
@@ -57,5 +61,13 @@ public class Feedback {
 
     public void setStaff(Staff staff) {
         this.staff = staff;
+    }
+
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
     }
 }

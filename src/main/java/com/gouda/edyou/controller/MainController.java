@@ -30,8 +30,8 @@ public class MainController {
 //
 //    @Value("${cohere.apiKey}")
 //    private String apiKey;
-//    @Value("${cohere.toxicityModel}")
-//    private String toxicityModelID;
+//    @Value("${cohere.rankingModel}")
+//    private String rankingModelID;
 //    private final RestTemplate restTemplate = new RestTemplate();
 
     private final UserService userService;
@@ -92,12 +92,9 @@ public class MainController {
                                     @RequestParam(name = "staff") long staffId,
                                     @ModelAttribute("feedbackForm") Feedback feedbackForm,
                                     BindingResult bindingResult, Model model) {
-        //TODO: maybe change to form style
-
         School school = schoolService.findByCode(code);
         Staff staff = staffService.findById(staffId);
         if (school == null || staff == null) return "redirect:/student-portal";
-        feedbackForm.setStaff(staff);
 
         feedbackValidator.validate(feedbackForm, bindingResult);
         if (bindingResult.hasErrors()) {
@@ -112,6 +109,7 @@ public class MainController {
             model.addAttribute("school", school);
             return "/feedback";
         }
+        feedbackForm.setStaff(staff);
 
         feedbackService.save(feedbackForm);
         return "redirect:/student-feedback?code=" + code;
@@ -134,6 +132,13 @@ public class MainController {
         });
         model.addAttribute("staff", staff);
         model.addAttribute("feedbackList", feedback);
+        double rating = 0;
+        for (Feedback fb : feedback) {
+            if (fb.getRating() != -1) {
+
+            }
+        }
+        model.addAttribute("rating", rating);
         return "staff";
     }
 
