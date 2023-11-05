@@ -41,16 +41,21 @@ public class FeedbackValidator implements Validator {
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.set("Authorization", "Bearer " + apiKey);
 
-        String requestJson = "{" +
-                "\"inputs\": [ \"" + feedback.getComment() + "\" ], " +
-                "\"model\": \"" + toxicityModelID + "\"" +
-                "}";
-        HttpEntity<String> request = new HttpEntity<>(requestJson, headers);
-        ResponseEntity<String> response = restTemplate.postForEntity(COHERE_URL, request, String.class);
-        int index = response.getBody().indexOf("\"Toxic\":{\"confidence\":") + "\"Toxic\":{\"confidence\":".length() + 1;
-        double confidence = Double.parseDouble(response.getBody().substring(index, index + response.getBody().substring(index).indexOf("}")));
-        if (confidence > 0.99) {
-            errors.rejectValue("comment", "error", "This comment was detected as toxic. Please reword and resubmit!");
+        try {
+            String requestJson = "{" +
+                    "\"inputs\": [ \"" + feedback.getComment() + "\" ], " +
+                    "\"model\": \"" + toxicityModelID + "\"" +
+                    "}";
+            HttpEntity<String> request = new HttpEntity<>(requestJson, headers);
+            ResponseEntity<String> response = restTemplate.postForEntity(COHERE_URL, request, String.class);
+            int index = response.getBody().indexOf("\"Toxic\":{\"confidence\":") + "\"Toxic\":{\"confidence\":".length() + 1;
+            double confidence = Double.parseDouble(response.getBody().substring(index, index + response.getBody().substring(index).indexOf("}")));
+            if (confidence > 0.99) {
+                errors.rejectValue("comment", "error", "This comment was detected as toxic. Please reword and resubmit!");
+            }
+        }
+        catch (Exception e) {
+
         }
     }
 }

@@ -68,10 +68,15 @@ public class StartupRunner implements CommandLineRunner {
 
             for (int j = 0; j < 10; j++) {
                 Feedback feedback = new Feedback();
-                feedback.setComment("comment " + i + " " + j);
+                feedback.setComment("comment comment commentary I think this and that " + i + " " + j);
                 feedback.setStaff(staff);
-                feedbackService.save(feedback);
+                feedbackService.save(feedback, (int)(Math.random()*5) + 1);
             }
         }
+
+        Staff joe = new Staff();
+        joe.setName("Demo Joe");
+        joe.setSchool(school);
+        staffService.save(joe);
     }
 }
