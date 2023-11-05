@@ -39,11 +39,11 @@ public class StartupRunner implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         String[] commentPool = new String[]{
-          "This teacher is great!",
-          "Their lectures are a bit boring.",
-          "There's too much homework in their class.",
-          "This teacher is too harsh on students and affect mental health.",
-          "They clearly care about their students."
+          "He's great!",
+          "His lectures are a bit boring.",
+          "There's too much homework in his class.",
+          "He is too harsh on students and affects mental health.",
+          "He clearly cares about his students."
         };
 
         School school = new School();
@@ -98,12 +98,5 @@ public class StartupRunner implements CommandLineRunner {
         joe.setName("Demo Joe");
         joe.setSchool(school);
         staffService.save(joe);
-
-        for (int j = 0; j < 5; j++) {
-            Feedback feedback = new Feedback();
-            feedback.setComment(commentPool[(int)(Math.random() * commentPool.length)]);
-            feedback.setStaff(joe);
-            feedbackService.save(feedback, (int)(Math.random()*5) + 1);
-        }
     }
 }
