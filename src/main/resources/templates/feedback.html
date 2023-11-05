@@ -4,7 +4,7 @@
 </head>
 <body>
     <div th:text="${school.name}"></div>
-    <form action="/student-feedback" method="post" autocomplete="off">
+    <form action="/student-feedback" method="post" th:object="${feedbackForm}" autocomplete="off">
         <div>
             <label for="staff">Teacher</label>
 
@@ -14,7 +14,8 @@
         </div>
         <div>
             <label for="comment">Feedback</label>
-            <textarea type="text" name="comment" id="comment"></textarea>
+            <textarea type="text" name="comment" id="comment" th:field="*{comment}"></textarea>
+            <div class="" th:if="${#fields.hasErrors('comment')}" th:errors="*{comment}"></div>
         </div>
         <div style="display: none;">
             <input type="text" name="code" id="code" th:value="${school.code}">

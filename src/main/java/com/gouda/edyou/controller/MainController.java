@@ -8,35 +8,55 @@ import com.gouda.edyou.service.FeedbackService;
 import com.gouda.edyou.service.SchoolService;
 import com.gouda.edyou.service.StaffService;
 import com.gouda.edyou.service.UserService;
+import com.gouda.edyou.validator.FeedbackValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import java.security.Principal;
 import java.util.*;
 
 @Controller
 public class MainController {
+    private static final String COHERE_URL = "https://api.cohere.ai/v1/classify";
+
+    @Value("${cohere.apiKey}")
+    private String apiKey;
+    private final RestTemplate restTemplate = new RestTemplate();
+
     private final UserService userService;
     private final StaffService staffService;
     private final SchoolService schoolService;
     private final FeedbackService feedbackService;
+    private final FeedbackValidator feedbackValidator;
+
 
     @Autowired
-    public MainController(UserService userService, StaffService staffService, SchoolService schoolService, FeedbackService feedbackService) {
+    public MainController(UserService userService, StaffService staffService, SchoolService schoolService, FeedbackService feedbackService, FeedbackValidator feedbackValidator) {
         this.userService = userService;
         this.staffService = staffService;
         this.schoolService = schoolService;
         this.feedbackService = feedbackService;
+        this.feedbackValidator = feedbackValidator;
     }
 
     @GetMapping("/student-portal")
     public String studentPortal() {
         return "student-portal";
+    }
+
+    @GetMapping("/test")
+    public String test(@RequestParam(name = "comment") String comment, Model model) {
+
+        return "home";
     }
 
     @GetMapping("/student-feedback")
@@ -52,20 +72,36 @@ public class MainController {
         });
         model.addAttribute("school", school);
         model.addAttribute("staffList", staff);
+        model.addAttribute("feedbackForm", new Feedback());
         return "feedback";
     }
     @PostMapping("/student-feedback")
     public String studentPortalPost(@RequestParam(name = "code") String code,
                                     @RequestParam(name = "staff") long staffId,
-                                    @RequestParam(name = "comment") String comment,
-                                    Model model) {
+                                    @ModelAttribute("feedbackForm") Feedback feedbackForm,
+                                    BindingResult bindingResult, Model model) {
+        //TODO: maybe change to form style
+
         School school = schoolService.findByCode(code);
         Staff staff = staffService.findById(staffId);
         if (school == null || staff == null) return "redirect:/student-portal";
-        Feedback feedback = new Feedback();
-        feedback.setStaff(staff);
-        feedback.setComment(comment);
-        feedbackService.save(feedback);
+        feedbackForm.setStaff(staff);
+
+        feedbackValidator.validate(feedbackForm, bindingResult);
+        if (bindingResult.hasErrors()) {
+            List<Staff> staffList = new ArrayList<>(school.getStaff().stream().toList());
+            Collections.sort(staffList, new Comparator<Staff>() {
+                @Override
+                public int compare(Staff o1, Staff o2) {
+                    return o1.getName().compareTo(o2.getName());
+                }
+            });
+            model.addAttribute("staffList", staffList);
+            model.addAttribute("school", school);
+            return "/feedback";
+        }
+
+        feedbackService.save(feedbackForm);
         return "redirect:/student-feedback?code=" + code;
     }
 
